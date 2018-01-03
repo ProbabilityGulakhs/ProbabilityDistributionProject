@@ -5,8 +5,8 @@ account: probabilitygoolakhs
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 253294
-bundleId: 1160094
+bundleId: 1160223
 url: https://probabilitygoolakhs.shinyapps.io/probability_goolakhs/
-when: 1514977952.06164
+when: 1514986243.37141
 asMultiple: FALSE
 asStatic: FALSE

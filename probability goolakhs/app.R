@@ -76,28 +76,39 @@ ui <- fluidPage(
                             h4(textOutput("uniform_rand")),br(),
                             actionButton("un_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("un_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("un_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("un_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("un_es_1")),
+                            h4(textOutput("un_es_2"))
                           ),
                           mainPanel(br(),br(),br(),br(),
-                            fluidRow(column(8,
-                                    plotOutput("uniformplot"),
-                                    offset = 2)
-                              )))),
+                                    fluidRow(column(8,
+                                                    plotOutput("uniformplot"),
+                                                    offset = 2)
+                                    )))),
                tabPanel("Bernouli",
                         sidebarLayout(
-                         sidebarPanel(
-                           br(),h4("random number will be generated according to paramater"),br(),br(),
-                           textInput("br_number_1", "bernouli parameter", "0.5"),
-                           h4(textOutput("br_rand")),br(),
-                           actionButton("br_gen", "generate", class = "btn-primary",width = '100%'),
-                           h5(""),
-                           actionButton("br_plot", "plot", class = "btn-primary",width = '100%')
-                           ),
-                         mainPanel(br(),br(),br(),br(),
-                           fluidRow(column(8,
-                                    plotOutput("brplot"),
-                                    offset = 2)
-                           )))),
+                          sidebarPanel(
+                            br(),h4("random number will be generated according to paramater"),br(),br(),
+                            textInput("br_number_1", "bernouli parameter", "0.5"),
+                            h4(textOutput("br_rand")),br(),
+                            actionButton("br_gen", "generate", class = "btn-primary",width = '100%'),
+                            h5(""),
+                            actionButton("br_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("br_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("br_es_1"))
+                          ),
+                          mainPanel(br(),br(),br(),br(),
+                                    fluidRow(column(8,
+                                                    plotOutput("brplot"),
+                                                    offset = 2)
+                                    )))),
                tabPanel("Binomial",
                         sidebarLayout(
                           sidebarPanel(
@@ -107,7 +118,13 @@ ui <- fluidPage(
                             h4(textOutput("bi_rand")),br(),
                             actionButton("bi_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("bi_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("bi_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("bi_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("bi_es_1")),
+                            h4(textOutput("bi_es_2"))
                           ),
                           mainPanel(br(),br(),br(),br(),
                                     fluidRow(column(8,
@@ -122,7 +139,12 @@ ui <- fluidPage(
                             h4(textOutput("ge_rand")),br(),
                             actionButton("ge_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("ge_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("ge_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("ge_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("ge_es_1"))
                           ),
                           mainPanel(br(),br(),br(),br(),
                                     fluidRow(column(8,
@@ -137,7 +159,12 @@ ui <- fluidPage(
                             h4(textOutput("exp_rand")),br(),
                             actionButton("exp_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("exp_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("exp_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("ex_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("ex_es_1"))
                           ),
                           mainPanel(br(),br(),br(),br(),
                                     fluidRow(column(8,
@@ -153,7 +180,13 @@ ui <- fluidPage(
                             h4(textOutput("ga_rand")),br(),
                             actionButton("ga_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("ga_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("ga_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("ga_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("ga_es_1")),
+                            h4(textOutput("ga_es_2"))
                           ),
                           mainPanel(br(),br(),br(),br(),
                                     fluidRow(column(8,
@@ -169,7 +202,13 @@ ui <- fluidPage(
                             h4(textOutput("po_rand")),br(),
                             actionButton("po_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("po_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("po_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("po_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("po_es_1")),
+                            h4(textOutput("po_es_2"))
                           ),
                           mainPanel(br(),br(),br(),br(),
                                     fluidRow(column(8,
@@ -185,12 +224,18 @@ ui <- fluidPage(
                             h4(textOutput("no_rand")),br(),
                             actionButton("no_gen", "generate", class = "btn-primary",width = '100%'),
                             h5(""),
-                            actionButton("no_plot", "plot", class = "btn-primary",width = '100%')
+                            actionButton("no_plot", "plot", class = "btn-primary",width = '100%'),
+                            
+                            br(),br(),
+                            h4("estimation"),
+                            fileInput("no_file", "upload your file", accept = c("text/txt",".txt")),
+                            h4(textOutput("no_es_1")),
+                            h4(textOutput("no_es_2"))
                           ),
                           mainPanel(br(),br(),br(),br(),
-                                    fluidRow(column(8,
+                                    fluidRow(column(10,
                                                     plotOutput("noplot"),
-                                                    offset = 2)
+                                                    offset = 1)
                                     ))))
              )
     ),
@@ -214,11 +259,20 @@ server <- function(input, output) {
   output$uniformplot <- renderPlot({
     input$un_plot
     f2(as.numeric(input$uniform_number_1),as.numeric(input$uniform_number_2))
-    })
+  })
   output$uniform_rand <- renderText({
     input$un_gen
     paste("random number is: ",dugen(as.numeric(input$uniform_number_1),as.numeric(input$uniform_number_2)))
-    })
+  })
+  output$un_es_1 <- renderText({
+    req(input$un_file)
+    ###### estimation codes should be here
+  })
+  output$un_es_2 <- renderText({
+    req(input$un_file)
+    ###### estimation codes should be here
+  })
+  
   
   #bernouli
   output$brplot <- renderPlot({
@@ -229,6 +283,11 @@ server <- function(input, output) {
     input$br_gen
     paste("random number is: ",brgen(as.numeric(input$br_number_1)))
   })
+  output$br_es_1 <- renderText({
+    req(input$br_file)
+    ###### estimation codes should be here
+  })
+  
   
   #binomial
   output$biplot <- renderPlot({
@@ -239,6 +298,15 @@ server <- function(input, output) {
     input$bi_gen
     paste("random number is: ",bigen(as.numeric(input$bi_number_1),as.numeric(input$bi_number_2)))
   })
+  output$bi_es_1 <- renderText({
+    req(input$bi_file)
+    ###### estimation codes should be here
+  })
+  output$bi_es_2 <- renderText({
+    req(input$bi_file)
+    ###### estimation codes should be here
+  })
+  
   
   #geometric
   output$geplot <- renderPlot({
@@ -249,6 +317,11 @@ server <- function(input, output) {
     input$ge_gen
     paste("random number is: ",gegen(as.numeric(input$ge_number_1)))
   })
+  output$ge_es_1 <- renderText({
+    req(input$ge_file)
+    ###### estimation codes should be here
+  })
+  
   
   #exponantial
   output$expplot <- renderPlot({
@@ -259,6 +332,11 @@ server <- function(input, output) {
     input$exp_gen
     paste("random number is: ",expgen(as.numeric(input$exp_number_1)))
   })
+  output$exp_es_1 <- renderText({
+    req(input$exp_file)
+    ###### estimation codes should be here
+  })
+  
   
   #gamma
   output$gaplot <- renderPlot({
@@ -269,6 +347,15 @@ server <- function(input, output) {
     input$ga_gen
     paste("random number is: ",gagen(as.numeric(input$ga_number_1),as.numeric(input$ga_number_2)))
   })
+  output$ga_es_1 <- renderText({
+    req(input$ga_file)
+    ###### estimation codes should be here
+  })
+  output$ga_es_2 <- renderText({
+    req(input$ga_file)
+    ###### estimation codes should be here
+  })
+  
   
   #poisson
   output$poplot <- renderPlot({
@@ -279,6 +366,15 @@ server <- function(input, output) {
     input$po_gen
     paste("random number is: ",pogen(as.numeric(input$po_number_1),as.numeric(input$po_number_2)))
   })
+  output$po_es_1 <- renderText({
+    req(input$po_file)
+    ###### estimation codes should be here
+  })
+  output$po_es_2 <- renderText({
+    req(input$po_file)
+    ###### estimation codes should be here
+  })
+  
   
   #normal
   output$noplot <- renderPlot({
@@ -288,6 +384,14 @@ server <- function(input, output) {
   output$no_rand <- renderText({
     input$no_gen
     paste("random number is: ",nogen(as.numeric(input$no_number_1),as.numeric(input$no_number_2)))
+  })
+  output$no_es_1 <- renderText({
+    req(input$no_file)
+    ###### estimation codes should be here
+  })
+  output$no_es_2 <- renderText({
+    req(input$no_file)
+    ###### estimation codes should be here
   })
   
   
@@ -538,12 +642,12 @@ f10 <- function(a,b){
   k = nogen(a,b)
   while (s < 3000){
     #while (k == c[s]){
-      k = nogen(a,b)
+    k = nogen(a,b)
     #}
-    if(s%%2 == 0&k>=0) {
-      k=-k
+    if(s%%2 == 0&k-a>=0) {
+      k=2*a-k
       c = c(c,k)
-    }else if(k>0){
+    }else if(k-a>0){
       c = c(c,k)
     }
     s = s + 1
