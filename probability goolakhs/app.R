@@ -3,6 +3,7 @@ library(shiny)
 library(shinythemes)
 library("ggplot2")
 
+minLog <- 0.0000001
 
 ui <- fluidPage(
   
@@ -248,7 +249,7 @@ ui <- fluidPage(
   
 )
 
-server <- function(input, output) {
+server <- function(input, output,session) {
   
   #pics
   output$ali <- renderImage({list(src = "ali.jpg",contentType = 'image/jpg',width = 300,height = 500,alt = "ali gorji pic")},deleteFile = FALSE)
@@ -266,11 +267,11 @@ server <- function(input, output) {
   })
   output$un_es_1 <- renderText({
     req(input$un_file)
-    ###### estimation codes should be here
-  })
-  output$un_es_2 <- renderText({
-    req(input$un_file)
-    ###### estimation codes should be here
+    unes <- estimate(input$un_file$name, uniform.lik, c(0,1))
+    output$un_es_2 <- renderText({unes[2]})
+    updateTextInput(session =  session,"uniform_number_1",value = unes[1])
+    updateTextInput(session =  session,"uniform_number_2",value = unes[2])
+    return(unes[1])
   })
   
   
@@ -286,6 +287,8 @@ server <- function(input, output) {
   output$br_es_1 <- renderText({
     req(input$br_file)
     ###### estimation codes should be here
+    updateTextInput(session =  session,"br_number_1",value = bres[1])
+    updateTextInput(session =  session,"br_number_2",value = bres[2])
   })
   
   
@@ -305,6 +308,8 @@ server <- function(input, output) {
   output$bi_es_2 <- renderText({
     req(input$bi_file)
     ###### estimation codes should be here
+    updateTextInput(session =  session,"bi_number_1",value = bies[1])
+    updateTextInput(session =  session,"bi_number_2",value = bies[2])
   })
   
   
@@ -320,6 +325,8 @@ server <- function(input, output) {
   output$ge_es_1 <- renderText({
     req(input$ge_file)
     ###### estimation codes should be here
+    updateTextInput(session =  session,"ge_number_1",value = gees[1])
+    updateTextInput(session =  session,"ge_number_2",value = gees[2])
   })
   
   
@@ -335,6 +342,8 @@ server <- function(input, output) {
   output$exp_es_1 <- renderText({
     req(input$exp_file)
     ###### estimation codes should be here
+    updateTextInput(session =  session,"exp_number_1",value = expes[1])
+    updateTextInput(session =  session,"exp_number_2",value = expes[2])
   })
   
   
@@ -349,11 +358,11 @@ server <- function(input, output) {
   })
   output$ga_es_1 <- renderText({
     req(input$ga_file)
-    ###### estimation codes should be here
-  })
-  output$ga_es_2 <- renderText({
-    req(input$ga_file)
-    ###### estimation codes should be here
+    gaes <- estimate(input$ga_file$name , gamma.lik, c(1,1))
+    output$ga_es_2 <- renderText({gaes[2]})
+    updateTextInput(session =  session,"ga_number_1",value = gaes[1])
+    updateTextInput(session =  session,"ga_number_2",value = gaes[2])
+    return(gaes[1])
   })
   
   
@@ -368,11 +377,11 @@ server <- function(input, output) {
   })
   output$po_es_1 <- renderText({
     req(input$po_file)
-    ###### estimation codes should be here
-  })
-  output$po_es_2 <- renderText({
-    req(input$po_file)
-    ###### estimation codes should be here
+    poes <- estimate(input$po_file$name, poisson.lik, 1)
+    output$po_es_2 <- renderText({poes[2]})
+    updateTextInput(session =  session,"po_number_1",value = poes[1])
+    updateTextInput(session =  session,"po_number_2",value = 1)
+    return(poes[1])
   })
   
   
@@ -387,14 +396,12 @@ server <- function(input, output) {
   })
   output$no_es_1 <- renderText({
     req(input$no_file)
-    ###### estimation codes should be here
+    noes <- estimate(input$no_file$name, normal.lik, c(0,1))
+    output$no_es_2 <- renderText({noes[2]})
+    updateTextInput(session =  session,"no_number_1",value = noes[1])
+    updateTextInput(session =  session,"no_number_2",value = noes[2])
+    return(noes[1])
   })
-  output$no_es_2 <- renderText({
-    req(input$no_file)
-    ###### estimation codes should be here
-  })
-  
-  
 }
 
 
@@ -657,6 +664,52 @@ f10 <- function(a,b){
   qplot(Normal, breaks = bins, ylab = "count",xlim = c(-100,100))
 }
 
+
+### estimations:
+uniform.lik <- function(theta,y){
+  a<-theta[1]
+  b<-theta[2]
+  n<-length(y)
+  if(a>=b || a>min(y) || b<max(y))
+    return(0)
+  return(-n*log(1/(b-a)))
+}
+poisson.lik<-function(mu,y)
+{
+  n<-length(y)
+  if(mu<minLog)
+    mu=minLog
+  logl<-log(mu)*sum(y)-n*mu
+  return(-logl)
+}
+normal.lik<-function(theta,y)
+{
+  mu<-theta[1]
+  sigma2<-theta[2]
+  n<-length(y)
+  if(sigma2<minLog)
+    sigma2=minLog
+  logl<- -.5*n*log(2*pi) -.5*n*log(sigma2) - (1/(2*sigma2))*sum((y-mu)**2)
+  return(-logl)
+}
+gamma.lik<-function(theta,y)
+{
+  alpha<-theta[1]
+  betha<-theta[2]
+  n<-length(y)
+  logl<- sum(log(dgamma(y,alpha, betha)))
+  return(-logl)
+}
+estimate <- function(filename, likelihoodFunction, start){
+  observations <- as.numeric(read.table(filename)[1,])
+  if(identical(likelihoodFunction ,uniform.lik)){
+    estimateReturn <- optim(start,likelihoodFunction,y=observations,method="L-BFGS-B", lower=c(a=-Inf, b=max(observations)), upper=c(a=min(observations), b=Inf))
+  }
+  else{
+    estimateReturn <- optim(start,likelihoodFunction,y=observations,method="L-BFGS-B")
+  }
+  return(estimateReturn$par)
+}
 
 
 
