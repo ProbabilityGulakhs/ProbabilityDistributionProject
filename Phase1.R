@@ -40,18 +40,18 @@ brgen <- function(p)
 {
   temp <- cugen()
   if(temp < p)
-    return(0)
-  else
     return(1)
+  else
+    return(0)
 }
 #5
 bigen <- function(p, n)
 {
-  temp <- 1
+  temp2 <- 1
   for(i in 1:n)
-    temp <- temp + brgen(p)
-  temp <- temp - 1
-  return(temp)
+    temp2 <- temp2 + brgen(p)
+  temp2 <- temp2 - 1
+  return(temp2)
 }
 #6
 gegen <- function(parameter){
@@ -59,12 +59,12 @@ gegen <- function(parameter){
   i <- 0
   result <- brgen(parameter) 
   
-  while(result < parameter){
+  while(result == 0){
     result <- brgen(parameter)
   }
   result <- brgen(parameter)
   
-  while(result < parameter){
+  while(result == 0){
     i = i+1
     result <- brgen(parameter)
   }
